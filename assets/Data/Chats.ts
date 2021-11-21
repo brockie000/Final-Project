@@ -11,7 +11,7 @@ export default {
 	}],
 	messages: [{
 		id: 'm1',
-		content: 'How are you!',
+		content: 'Hellow how are you',
 		createdAt: '2020-10-10T12:48:00.000Z',
 		user: {
 			id: 'u1',
@@ -19,12 +19,20 @@ export default {
 		},
 	}, {
 		id: 'm2',
-		content: 'I am good, good',
+		content: 'good thankyou, you?',
 		createdAt: '2020-10-03T14:49:00.000Z',
 		user: {
 			id: 'u2',
 			name: 'Alex',
 		},
+		
+	}, {id: 'm3',
+	content: 'Brilliant',
+	createdAt: '2020-10-03T14:49:00.000Z',
+	user: {
+		id: 'u1',
+		name: 'Alex',
+	},
 	}]
 }
 

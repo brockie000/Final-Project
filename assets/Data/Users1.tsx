@@ -1,6 +1,4 @@
-const data = {
-
-    users: [
+export default [
     {
     id: 'u1',
     name: 'Kai Brockie',
@@ -17,6 +15,4 @@ const data = {
     image: '',
     },
 ]
-}
 
-export default data;

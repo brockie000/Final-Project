@@ -4,7 +4,7 @@
  *
  */
 
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Image, Pressable, Text, useWindowDimensions, View } from 'react-native';
@@ -14,6 +14,7 @@ import { SimpleLineIcons } from '@expo/vector-icons';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
+import FriendScreen from '../screens/FriendScreen';
 import ChatRoomsScreen from '../screens/ChatRoomsScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
@@ -39,6 +40,7 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={HomeScreen} options={{headerTitle: HomeHeader }} />
       <Stack.Screen name="ChatRoom" component={ChatRoomsScreen} options={{ headerTitle: ChatRoomHeader, headerBackTitleVisible: false, }} />
+      <Stack.Screen name="Friend" component={FriendScreen} options={{title: 'Users', headerBackTitleVisible: false}} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
       <Stack.Screen name="Modal" component={ModalScreen} />
@@ -77,6 +79,7 @@ const ChatRoomHeader = (props) => {
 
 const HomeHeader = (props) => {
   const {width} = useWindowDimensions()
+  const navigation = useNavigation()
 
   return(
     <View style={{
@@ -94,7 +97,9 @@ const HomeHeader = (props) => {
       
       <View style={{flexDirection: 'row'}}>
         <Feather name="camera" size={24} color="black" style={{marginHorizontal: 10}}/>
-        <SimpleLineIcons name="pencil" size={24} color="black" style={{marginHorizontal: 10}}/>
+        <Pressable onPress={() => navigation.navigate('Friend')}>
+          <SimpleLineIcons name="pencil" size={24} color="black" style={{marginHorizontal: 10}}/>
+        </Pressable>
       </View>
 
     </View>

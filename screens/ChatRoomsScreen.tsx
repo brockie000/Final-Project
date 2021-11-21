@@ -15,7 +15,7 @@ export default function ChatRoomsScreen() {
 
     console.warn(route.params?.id);
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
             <FlatList
             data={Chats.messages}
             renderItem={({item}) => <Message message={item} />}
