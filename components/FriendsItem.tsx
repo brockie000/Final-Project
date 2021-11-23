@@ -1,13 +1,31 @@
+import { DataStore } from '@aws-amplify/datastore'
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { Image, StyleSheet, Text, View, Pressable } from 'react-native'
+import { Users } from '../src/models'
+import { ChatRoom, ChatRoomUsers } from '../src/models'
 
 export default function Friendsitem({users}) {
 
     const navigation = useNavigation()
 
-    const onPress = () => {
-        //create chatroom
+    const onPress = async () => {
+        //Create new chat room
+        const newChatRoom = await DataStore.save(new ChatRoom({newMessages: 0})) 
+        const dbUser = await DataStore.query(Users, '7fafaec5-ecda-41fb-96b4-499030320f5d')
+
+        await DataStore.save(new ChatRoomUsers({
+            users: dbUser,
+            chatroom: newChatRoom
+        }))
+
+        await DataStore.save(new ChatRoomUsers({
+            users,
+            chatroom: newChatRoom
+        }));
+
+        navigation.navigate('ChatRoom', {id: newChatRoom.id});
+        
     }
 
     return (
@@ -17,6 +35,7 @@ export default function Friendsitem({users}) {
                 <View style={styles.row}> 
                     <Text style={styles.name}>{users.name}</Text>
                 </View>
+                <Text numberOfLines={1}>{users.status}</Text>
             </View>
         </Pressable>
     )
@@ -33,21 +52,6 @@ const styles = StyleSheet.create({
         borderRadius: 30,
         marginRight: 10,
     },
-    badgeContainer: {
-        backgroundColor: '#3777f0',
-        width: 20,
-        height: 20,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-    },
-    badgeText: {
-        color: 'white',
-        fontSize: 12,
-    },
     rightContainer: {
         flex: 1,
         justifyContent: 'center'
@@ -63,9 +67,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
 
-    },
-    text: {
-        color: 'grey'
     },
     
 })
